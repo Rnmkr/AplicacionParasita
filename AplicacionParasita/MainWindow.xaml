@@ -5,10 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AplicacionParasita"
         mc:Ignorable="d"
-        Title="MainWindow" Height="150" Width="300" WindowStartupLocation="Manual" Left="0" Top="0" ResizeMode="NoResize" Topmost="True" WindowStyle="None" ShowInTaskbar="False" ShowActivated="False" >
+        Title="MainWindow" Height="75" Width="300" WindowStartupLocation="Manual" Left="0" Top="0" ResizeMode="NoResize" Topmost="True" WindowStyle="None" ShowInTaskbar="False" ShowActivated="False" >
     <Grid>
         <Label Name="labelIndicador" Background="Green" HorizontalAlignment="Left" VerticalAlignment="Center" Height="50" Width="50" Margin="10,0,0,0"/>
         <Label Name="labelTexto" Content="ENVIANDO DATOS AL DISPLAY" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="70,0,0,0" FontSize="16" />
-        <Label Name="labelVER" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,10,10" FontSize="16" />
+        <Label Name="labelVER" Content="VERSION" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,5,5" FontSize="10" />
     </Grid>
 </Window>

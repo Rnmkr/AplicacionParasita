@@ -1,0 +1,13 @@
+﻿<Window x:Class="AplicacionParasita.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AplicacionParasita"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="150" Width="300" WindowStartupLocation="Manual" Left="0" Top="0" ResizeMode="NoResize" Topmost="True" WindowStyle="None" ShowInTaskbar="False" ShowActivated="False" >
+    <Grid>
+        <Label Name="labelIndicador" Background="Green" HorizontalAlignment="Left" VerticalAlignment="Center" Height="50" Width="50" Margin="10,0,0,0"/>
+        <Label Name="labelTexto" Content="ENVIANDO DATOS AL DISPLAY" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="70,0,0,0" FontSize="16" />
+    </Grid>
+</Window>

@@ -32,6 +32,7 @@ namespace AplicacionParasita
             _LOGFILEPATH= Path.Combine(Directory.GetParent(Assembly.GetExecutingAssembly().Location).ToString(), "AplicacionParasita.apl");
             _TEXTFILEPATH = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Hide", "FORMATO.TXT");
             _EXEFILEPATH = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Embalado", "Comunicador.exe");
+            labelVER.Content = Assembly.GetExecutingAssembly().GetName().Version.ToString();
         }
 
         private void EnviarDatos()

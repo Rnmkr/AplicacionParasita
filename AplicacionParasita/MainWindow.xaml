@@ -9,5 +9,6 @@
     <Grid>
         <Label Name="labelIndicador" Background="Green" HorizontalAlignment="Left" VerticalAlignment="Center" Height="50" Width="50" Margin="10,0,0,0"/>
         <Label Name="labelTexto" Content="ENVIANDO DATOS AL DISPLAY" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="70,0,0,0" FontSize="16" />
+        <Label Name="labelVER" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,10,10" FontSize="16" />
     </Grid>
 </Window>

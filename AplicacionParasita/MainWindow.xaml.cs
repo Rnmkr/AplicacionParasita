@@ -21,33 +21,52 @@ namespace AplicacionParasita
         private string _TEXTFILEPATH;
         private string _EXEFILEPATH;
         private string _LOGFILEPATH;
+        private int _SEGUNDOSREFRESCO = 20;
+        private int counter;
 
         public MainWindow()
         {
             InitializeComponent();
 
-            _timer = new Timer(20 * 1000) { AutoReset = true }; //espera 20 segundos (+10 de espera refrescando) para enviar datos a la pantalla.
+            _timer = new Timer(1000) { AutoReset = true }; //espera 20 segundos (+10 de espera refrescando) para enviar datos a la pantalla.
             _timer.Elapsed += (sender, eventArgs) => EnviarDatos();
             _timer.Start();
             _LOGFILEPATH= Path.Combine(Directory.GetParent(Assembly.GetExecutingAssembly().Location).ToString(), "AplicacionParasita.apl");
             _TEXTFILEPATH = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Hide", "FORMATO.TXT");
             _EXEFILEPATH = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Embalado", "Comunicador.exe");
             labelVER.Content = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            counter = _SEGUNDOSREFRESCO;
+            labelIndicador.Content = counter;
         }
 
         private void EnviarDatos()
         {
-            try
+            counter--;
+            if (counter == 0)
             {
-                RefrescarDatos();
-                var lineas = ReadLines(_TEXTFILEPATH);
-                var datosVisor = ObtenerDatosVisor(lineas);
-                SendMulticast(datosVisor);
+                counter = _SEGUNDOSREFRESCO;
+                try
+                {
+                    RefrescarDatos();
+                    var lineas = ReadLines(_TEXTFILEPATH);
+                    var datosVisor = ObtenerDatosVisor(lineas);
+                    SendMulticast(datosVisor);
+                    labelIndicador.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal,
+                       new Action(() => { labelIndicador.Background = System.Windows.Media.Brushes.Green; }));
+                    labelIndicador.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal,
+                       new Action(() => { labelTexto.Content = "ENVIANDO DATOS AL DISPLAY"; }));
+                }
+                catch (Exception e)
+                {
+                    EscribirLog("SData: " + e.Message);
+                    labelIndicador.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal,
+                                       new Action(() => { labelIndicador.Background = System.Windows.Media.Brushes.Red; }));
+                    labelIndicador.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal,
+                       new Action(() => { labelTexto.Content = "NO SE ENVIARON DATOS AL DISPLAY"; }));
+                }
             }
-            catch (Exception e)
-            {
-                EscribirLog("SData: " + e.Message);
-            }
+            labelIndicador.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal,
+               new Action(() => { labelIndicador.Content = counter; }));
         }
 
         private void RefrescarDatos()
@@ -62,7 +81,11 @@ namespace AplicacionParasita
             }
             catch (Exception e)
             {
-                EscribirLog(e.Message);
+                EscribirLog("RData: " + e.Message);
+                labelIndicador.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal,
+                   new Action(() => { labelIndicador.Background = System.Windows.Media.Brushes.Red; }));
+                labelIndicador.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal,
+                   new Action(() => { labelTexto.Content = "NO SE ENVIAN DATOS AL DISPLAY"; }));
             }
 
         }

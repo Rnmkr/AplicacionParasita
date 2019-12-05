@@ -52,7 +52,7 @@ namespace AplicacionParasita
                     var datosVisor = ObtenerDatosVisor(lineas);
                     SendMulticast(datosVisor);
                     labelIndicador.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal,
-                       new Action(() => { labelIndicador.Background = System.Windows.Media.Brushes.Green; }));
+                       new Action(() => { labelIndicador.Background = System.Windows.Media.Brushes.LawnGreen; }));
                     labelIndicador.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal,
                        new Action(() => { labelTexto.Content = "ENVIANDO DATOS AL DISPLAY"; }));
                 }

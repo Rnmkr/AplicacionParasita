@@ -28,15 +28,25 @@ namespace AplicacionParasita
         {
             InitializeComponent();
 
-            _timer = new Timer(1000) { AutoReset = true }; //espera 20 segundos (+10 de espera refrescando) para enviar datos a la pantalla.
-            _timer.Elapsed += (sender, eventArgs) => EnviarDatos();
-            _timer.Start();
-            _LOGFILEPATH= Path.Combine(Directory.GetParent(Assembly.GetExecutingAssembly().Location).ToString(), "AplicacionParasita.apl");
-            _TEXTFILEPATH = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Hide", "FORMATO.TXT");
-            _EXEFILEPATH = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Embalado", "Comunicador.exe");
-            labelVER.Content = Assembly.GetExecutingAssembly().GetName().Version.ToString();
-            counter = _SEGUNDOSREFRESCO;
-            labelIndicador.Content = counter;
+            try
+            {
+                _timer = new Timer(1000) { AutoReset = true }; //espera 20 segundos (+10 de espera refrescando) para enviar datos a la pantalla.
+                _timer.Elapsed += (sender, eventArgs) => EnviarDatos();
+                _timer.Start();
+                _LOGFILEPATH = Path.Combine(Directory.GetParent(Assembly.GetExecutingAssembly().Location).ToString(), "AplicacionParasita.apl");
+                _TEXTFILEPATH = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Hide", "FORMATO.TXT");
+                _EXEFILEPATH = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Embalado", "Comunicador.exe");
+                labelVER.Content = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+                counter = _SEGUNDOSREFRESCO;
+                labelIndicador.Content = counter;
+
+            }
+            catch (Exception e)
+            {
+                EscribirLog("LD: " + e.Message);
+                labelIndicador.Background = System.Windows.Media.Brushes.Red;
+                labelTexto.Content = "NO SE ENVIAN DATOS AL DISPLAY";
+            }
         }
 
         private void EnviarDatos()
@@ -58,7 +68,7 @@ namespace AplicacionParasita
                 }
                 catch (Exception e)
                 {
-                    EscribirLog("SData: " + e.Message);
+                    EscribirLog("SD: " + e.Message);
                     labelIndicador.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal,
                                        new Action(() => { labelIndicador.Background = System.Windows.Media.Brushes.Red; }));
                     labelIndicador.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal,
@@ -81,7 +91,7 @@ namespace AplicacionParasita
             }
             catch (Exception e)
             {
-                EscribirLog("RData: " + e.Message);
+                EscribirLog("RD: " + e.Message);
                 labelIndicador.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal,
                    new Action(() => { labelIndicador.Background = System.Windows.Media.Brushes.Red; }));
                 labelIndicador.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal,

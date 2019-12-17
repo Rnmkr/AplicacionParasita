@@ -37,7 +37,6 @@ namespace AplicacionParasita
                 _TEXTFILEPATH = Path.Combine(Directory.GetParent(localdir).ToString(), "HIDE", "FORMATO.TXT");
                 _EXEFILEPATH = Path.Combine(localdir, "Comunicador.exe");
                 _LOGFILEPATH = Path.Combine(localdir, "AplicacionParasita.apl");
-                MessageBox.Show(_TEXTFILEPATH + _EXEFILEPATH + _LOGFILEPATH);
 
                 labelVER.Content = Assembly.GetExecutingAssembly().GetName().Version.ToString();
                 counter = _SEGUNDOSREFRESCO;

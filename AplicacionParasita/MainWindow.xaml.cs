@@ -33,9 +33,10 @@ namespace AplicacionParasita
                 _timer = new Timer(1000) { AutoReset = true }; //espera 20 segundos (+10 de espera refrescando) para enviar datos a la pantalla.
                 _timer.Elapsed += (sender, eventArgs) => EnviarDatos();
                 _timer.Start();
+
                 _LOGFILEPATH = Path.Combine(Assembly.GetExecutingAssembly().Location, "AplicacionParasita.apl");
                 _TEXTFILEPATH = Path.Combine(Directory.GetParent(Assembly.GetExecutingAssembly().Location).ToString(), "HIDE", "FORMATO.TXT");
-                _EXEFILEPATH = Path.Combine(Directory.GetParent(Assembly.GetExecutingAssembly().Location).ToString(), "EMBALADO", "Comunicador.exe");
+                _EXEFILEPATH = Path.Combine(Assembly.GetExecutingAssembly().Location, "Comunicador.exe");
                 labelVER.Content = Assembly.GetExecutingAssembly().GetName().Version.ToString();
                 counter = _SEGUNDOSREFRESCO;
                 labelIndicador.Content = counter;

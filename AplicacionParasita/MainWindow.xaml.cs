@@ -133,7 +133,26 @@ namespace AplicacionParasita
 
         private VisorData ObtenerDatosVisor(string[] lineas)
         {
+
             var datosVisor = new VisorData();
+
+            datosVisor.Linea = "--";
+            datosVisor.Supervisor = "----------";
+            datosVisor.PedidoEnProduccion = "-----------";
+            datosVisor.PedidoAnterior = "-----------";
+            datosVisor.PedidoSiguiente = "-----------";
+            datosVisor.TotalUnidadesPedido = "--";
+            datosVisor.Producto = "----------";
+            datosVisor.Modelo = "----------";
+            datosVisor.UnidadesTesteadas = "--";
+            datosVisor.TesteadoresDesignados = "";
+            datosVisor.UltimasTesteadas = "";
+            datosVisor.UnidadesEmbaladas = "--";
+            datosVisor.EmbaladoresDesignados = "";
+            datosVisor.UltimasEmbaladas = "";
+            datosVisor.ParcialTest = "--";
+            datosVisor.ParcialEmbalado = "--";
+            datosVisor.EstadoPedido = "----------";
 
             datosVisor.Linea = lineas[0];
             datosVisor.Supervisor = lineas[1];
@@ -151,6 +170,7 @@ namespace AplicacionParasita
             datosVisor.UltimasEmbaladas = lineas[13];
             datosVisor.ParcialTest = lineas[5];
             datosVisor.ParcialEmbalado = lineas[5];
+            datosVisor.EstadoPedido = lineas[14];
 
             return datosVisor;
         }

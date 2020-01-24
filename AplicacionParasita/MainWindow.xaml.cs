@@ -160,17 +160,24 @@ namespace AplicacionParasita
             datosVisor.PedidoAnterior = lineas[3];
             datosVisor.PedidoSiguiente = lineas[4];
             datosVisor.TotalUnidadesPedido = lineas[5];
-            datosVisor.Producto = lineas[6];
-            datosVisor.Modelo = lineas[7];
+
+            string pro = lineas[6];
+            pro = pro.Replace("_", " ").ToUpper();
+            datosVisor.Producto = pro;
+
+            string mod = lineas[7];
+            mod = mod.Replace("_", " ").ToUpper();
+            datosVisor.Modelo = mod;
+
             datosVisor.UnidadesTesteadas = lineas[8];
-            datosVisor.TesteadoresDesignados = lineas[9];
+            datosVisor.TesteadoresDesignados = lineas[9].ToUpper();
             datosVisor.UltimasTesteadas = lineas[10];
             datosVisor.UnidadesEmbaladas = lineas[11];
-            datosVisor.EmbaladoresDesignados = lineas[12];
+            datosVisor.EmbaladoresDesignados = lineas[12].ToUpper();
             datosVisor.UltimasEmbaladas = lineas[13];
-            datosVisor.ParcialTest = lineas[5];
-            datosVisor.ParcialEmbalado = lineas[5];
-            datosVisor.EstadoPedido = lineas[14];
+            datosVisor.ParcialTest = lineas[5]; //por ahora es siempre igual al total del pedido ingresado
+            datosVisor.ParcialEmbalado = lineas[5]; //por ahora es siempre igual al total del pedido ingresado
+            datosVisor.EstadoPedido = lineas[14].ToUpper();
 
             return datosVisor;
         }

@@ -170,16 +170,44 @@ namespace AplicacionParasita
             datosVisor.Modelo = mod;
 
             datosVisor.UnidadesTesteadas = lineas[8];
-            datosVisor.TesteadoresDesignados = lineas[9].ToUpper().TrimEnd();
+
+            datosVisor.TesteadoresDesignados = FormatearNombres(lineas[9]);
+
             datosVisor.UltimasTesteadas = lineas[10];
             datosVisor.UnidadesEmbaladas = lineas[11];
-            datosVisor.EmbaladoresDesignados = lineas[12].ToUpper().TrimEnd();
+
+            datosVisor.EmbaladoresDesignados = FormatearNombres(lineas[12]);
+
+
             datosVisor.UltimasEmbaladas = lineas[13];
             datosVisor.ParcialTest = lineas[5]; //por ahora es siempre igual al total del pedido ingresado
             datosVisor.ParcialEmbalado = lineas[5]; //por ahora es siempre igual al total del pedido ingresado
             datosVisor.EstadoPedido = lineas[14].ToUpper().TrimEnd();
 
             return datosVisor;
+        }
+
+        private string FormatearNombres(string s)
+        {
+            string[] strArray = s.ToUpper().Split('·');
+
+            string names = "·";
+
+            foreach (string item in strArray)
+            {
+                string[] subArray = item.Trim().Split(' ');
+
+                if (subArray.Length < 2) continue;
+
+                for (int i = 0; i < 2; i++)
+                {
+                    names += " " + subArray[i];
+                }
+
+                names += " ·";
+            }
+
+            return names;
         }
 
         private void SendMulticast(VisorData datos)

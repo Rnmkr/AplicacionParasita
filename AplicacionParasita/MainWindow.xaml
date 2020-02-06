@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AplicacionParasita"
         mc:Ignorable="d"
-        Title="MainWindow" Height="23" Width="360" WindowStartupLocation="Manual" Left="374" Top="0" ResizeMode="NoResize" Topmost="True" WindowStyle="None" ShowInTaskbar="False" ShowActivated="False" >
+        Title="MainWindow" Height="23" Width="360" WindowStartupLocation="Manual" Left="396" Top="0" ResizeMode="NoResize" Topmost="True" WindowStyle="None" ShowInTaskbar="False" ShowActivated="False" >
     <Grid Width="360" Height="23">
         <Label Name="labelIndicador" Background="Yellow" HorizontalAlignment="Left" Margin="5,0,0,0" BorderBrush="Black" BorderThickness="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" FontWeight="Bold" FontSize="10" Width="23"/>
         <Label Name="labelTexto" Content="ESPERANDO CARGA INICIAL" Margin="50,0,0,0" FontWeight="Bold" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center" Padding="0" HorizontalAlignment="Left" FontSize="10" />

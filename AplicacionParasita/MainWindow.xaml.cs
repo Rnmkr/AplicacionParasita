@@ -28,6 +28,8 @@ namespace AplicacionParasita
         {
             InitializeComponent();
 
+            this.Left = SystemParameters.PrimaryScreenWidth - this.Width;
+
             try
             {
                 _timer = new Timer(1000) { AutoReset = true }; //espera 20 segundos (+10 de espera refrescando) para enviar datos a la pantalla.
@@ -38,7 +40,7 @@ namespace AplicacionParasita
                 _EXEFILEPATH = Path.Combine(localdir, "Comunicador.exe");
                 _LOGFILEPATH = Path.Combine(localdir, "AplicacionParasita.apl");
 
-                labelVER.Content = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+                labelVER.Content = "v." + Assembly.GetExecutingAssembly().GetName().Version.ToString();
                 counter = _SEGUNDOSREFRESCO;
                 labelIndicador.Content = counter;
 

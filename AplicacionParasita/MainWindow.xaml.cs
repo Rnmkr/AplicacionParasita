@@ -26,6 +26,7 @@ namespace AplicacionParasita
         private int _counterRefresco;
         private string _promedio = "0";
         private int _counterRefrescoPromedio = 3;
+        private string _LOCALDIR;
 
         public MainWindow()
         {
@@ -40,12 +41,10 @@ namespace AplicacionParasita
                 _timer.Elapsed += (sender, eventArgs) => EnviarDatos();
                 _timer.Start();
 
-                var localdir = Directory.GetParent(Assembly.GetExecutingAssembly().Location).ToString();
-
-                _FORMATOTXT = Path.Combine(Directory.GetParent(localdir).ToString(), "HIDE", "FORMATO.TXT");
-                _PROMEDIOTXT = Path.Combine(Directory.GetParent(localdir).ToString(), "HIDE", DateTime.Today.ToString("yyyy-MM-dd") + ".PRM");
-                _COMUNICADOREXE = Path.Combine(localdir, "Comunicador.exe");
-                _PARASITAAPL = Path.Combine(localdir, "AplicacionParasita.apl");
+                _LOCALDIR = Directory.GetParent(Assembly.GetExecutingAssembly().Location).ToString();
+                _FORMATOTXT = Path.Combine(Directory.GetParent(_LOCALDIR).ToString(), "HIDE", "FORMATO.TXT");
+                _COMUNICADOREXE = Path.Combine(_LOCALDIR, "Comunicador.exe");
+                _PARASITAAPL = Path.Combine(_LOCALDIR, "AplicacionParasita.apl");
 
                 labelVER.Content = "v." + Assembly.GetExecutingAssembly().GetName().Version.ToString();
                 _counterRefresco = _SEGUNDOSREFRESCO;
@@ -107,14 +106,21 @@ namespace AplicacionParasita
 
                 if (_counterRefrescoPromedio == 0)
                 {
-                    Nullable<float> linesNullable = 0;
-                    Nullable<float> rate = 0;
+                    _PROMEDIOTXT = Path.Combine(Directory.GetParent(_LOCALDIR).ToString(), "HIDE", DateTime.Today.ToString("yyyy-MM-dd") + ".PRM");
+
                     DateTime creation = File.GetCreationTime(_PROMEDIOTXT);
-                    linesNullable = File.ReadAllLines(_PROMEDIOTXT).Length;
+
+                    float lines = File.ReadAllLines(_PROMEDIOTXT).Length;
+
                     float elapsed = DateTime.Now.Subtract(creation).Minutes;
-                    float lines = linesNullable.HasValue ? linesNullable.Value : 0;
-                    rate = (Nullable<float>)Math.Round((lines / elapsed), 2);
-                    rate = rate.HasValue ? rate.Value : 0;
+
+                    float rate = (float)Math.Round((lines / elapsed), 2);
+
+                    if (rate < 0)
+                    {
+                        rate = 0;
+                    }
+
                     _promedio = rate.ToString();
 
                     _counterRefrescoPromedio = 3;

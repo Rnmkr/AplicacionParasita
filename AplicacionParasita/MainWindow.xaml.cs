@@ -25,6 +25,7 @@ namespace AplicacionParasita
         private int _SEGUNDOSREFRESCO = 20;
         private int counter;
         private string _promedio = "0";
+        private int _counterPromedio = 3;
 
         public MainWindow()
         {
@@ -49,22 +50,6 @@ namespace AplicacionParasita
                 counter = _SEGUNDOSREFRESCO;
                 labelIndicador.Content = counter;
 
-                DateTime creation = File.GetCreationTime(_RATEFILEPATH);
-                float elapsed = DateTime.Now.Subtract(creation).Minutes;
-                Nullable<float> linesNullable = File.ReadAllLines(_RATEFILEPATH).Length;
-                float lines = linesNullable.HasValue ? linesNullable.Value : 0;
-                float rate = (float)Math.Round((lines / elapsed), 2);
-                _promedio = rate.ToString();
-
-                //Console.WriteLine("==========================================================");
-                //Console.WriteLine("==========================================================");
-                //Console.WriteLine("==========================================================");
-                //Console.WriteLine("Lineas: " + lines.ToString());
-                //Console.WriteLine("Tiempo: " + elapsed.ToString());
-                //Console.WriteLine("Lineas/Tiempo: " + _promedio);
-                //Console.WriteLine("==========================================================");
-                //Console.WriteLine("==========================================================");
-                //Console.WriteLine("==========================================================");
             }
             catch (Exception e)
             {
@@ -77,6 +62,19 @@ namespace AplicacionParasita
         private void EnviarDatos()
         {
             counter--;
+            _counterPromedio--;
+
+            if (_counterPromedio == 0)
+            {
+                DateTime creation = File.GetCreationTime(_RATEFILEPATH);
+                float elapsed = DateTime.Now.Subtract(creation).Minutes;
+                Nullable<float> linesNullable = File.ReadAllLines(_RATEFILEPATH).Length;
+                float lines = linesNullable.HasValue ? linesNullable.Value : 0;
+                float rate = (float)Math.Round((lines / elapsed), 2);
+                _promedio = rate.ToString();
+                _counterPromedio = 3;
+            }
+
             if (counter == 0)
             {
                 counter = _SEGUNDOSREFRESCO;

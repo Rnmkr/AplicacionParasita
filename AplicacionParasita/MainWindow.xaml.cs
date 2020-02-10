@@ -114,6 +114,13 @@ namespace AplicacionParasita
                     {
                         creation = File.GetCreationTime(_PROMEDIOTXT);
                         linesNullable = File.ReadAllLines(_PROMEDIOTXT).Length;
+
+                        float elapsed = DateTime.Now.Subtract(creation).Minutes;
+                        float lines = linesNullable.HasValue ? linesNullable.Value : 0;
+                        float rate = (float)Math.Round((lines / elapsed), 2);
+                        _promedio = rate.ToString();
+                        _counterRefrescoPromedio = 3;
+
                     }
                     catch (Exception e)
                     {
@@ -123,13 +130,6 @@ namespace AplicacionParasita
                         labelIndicador.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal,
                            new Action(() => { labelTexto.Content = "NO SE ENVIAN DATOS AL DISPLAY"; }));
                     }
-
-                    float elapsed = DateTime.Now.Subtract(creation).Minutes;
-                    float lines = linesNullable.HasValue ? linesNullable.Value : 0;
-                    float rate = (float)Math.Round((lines / elapsed), 2);
-                    _promedio = rate.ToString();
-                    _counterRefrescoPromedio = 3;
-
                 }
             }
             catch (Exception e)

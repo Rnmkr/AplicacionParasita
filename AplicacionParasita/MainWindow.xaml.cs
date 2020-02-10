@@ -109,6 +109,7 @@ namespace AplicacionParasita
                 {
                     DateTime creation = DateTime.Now;
                     Nullable<float> linesNullable = 0;
+                    Nullable<float> rate = 0;
 
                     try
                     {
@@ -117,10 +118,11 @@ namespace AplicacionParasita
 
                         float elapsed = DateTime.Now.Subtract(creation).Minutes;
                         float lines = linesNullable.HasValue ? linesNullable.Value : 0;
-                        float rate = (float)Math.Round((lines / elapsed), 2);
+                        rate = (Nullable<float>)Math.Round((lines / elapsed), 2);
+                        rate = rate.HasValue ? rate.Value : 0;
                         _promedio = rate.ToString();
-                        _counterRefrescoPromedio = 3;
 
+                        _counterRefrescoPromedio = 3;
                     }
                     catch (Exception e)
                     {

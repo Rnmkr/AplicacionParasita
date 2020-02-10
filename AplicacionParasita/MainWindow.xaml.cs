@@ -19,10 +19,12 @@ namespace AplicacionParasita
     {
         private readonly Timer _timer;
         private string _TEXTFILEPATH;
+        private string _RATEFILEPATH;
         private string _EXEFILEPATH;
         private string _LOGFILEPATH;
         private int _SEGUNDOSREFRESCO = 20;
         private int counter;
+        private string _promedio = "0";
 
         public MainWindow()
         {
@@ -32,11 +34,15 @@ namespace AplicacionParasita
 
             try
             {
+
+
                 _timer = new Timer(1000) { AutoReset = true }; //espera 20 segundos (+10 de espera refrescando) para enviar datos a la pantalla.
                 _timer.Elapsed += (sender, eventArgs) => EnviarDatos();
                 _timer.Start();
                 string localdir = Directory.GetParent(Assembly.GetExecutingAssembly().Location).ToString();
                 _TEXTFILEPATH = Path.Combine(Directory.GetParent(localdir).ToString(), "HIDE", "FORMATO.TXT");
+                _RATEFILEPATH = Path.Combine(Directory.GetParent(localdir).ToString(), "HIDE", DateTime.Today.ToString("yyyy-MM-dd") + ".PRM");
+                MessageBox.Show(_RATEFILEPATH);
                 _EXEFILEPATH = Path.Combine(localdir, "Comunicador.exe");
                 _LOGFILEPATH = Path.Combine(localdir, "AplicacionParasita.apl");
 
@@ -44,6 +50,22 @@ namespace AplicacionParasita
                 counter = _SEGUNDOSREFRESCO;
                 labelIndicador.Content = counter;
 
+                DateTime creation = File.GetCreationTime(_RATEFILEPATH);
+                float elapsed = DateTime.Now.Subtract(creation).Minutes;
+                Nullable<float> linesNullable = File.ReadAllLines(_RATEFILEPATH).Length;
+                float lines = linesNullable.HasValue ? linesNullable.Value : 0;
+                float rate = (float)Math.Round((lines / elapsed), 2);
+                _promedio = rate.ToString();
+
+                //Console.WriteLine("==========================================================");
+                //Console.WriteLine("==========================================================");
+                //Console.WriteLine("==========================================================");
+                //Console.WriteLine("Lineas: " + lines.ToString());
+                //Console.WriteLine("Tiempo: " + elapsed.ToString());
+                //Console.WriteLine("Lineas/Tiempo: " + _promedio);
+                //Console.WriteLine("==========================================================");
+                //Console.WriteLine("==========================================================");
+                //Console.WriteLine("==========================================================");
             }
             catch (Exception e)
             {
@@ -155,12 +177,13 @@ namespace AplicacionParasita
             datosVisor.ParcialTest = "--";
             datosVisor.ParcialEmbalado = "--";
             datosVisor.EstadoPedido = "----------";
+            datosVisor.Promedio = "----";
 
             datosVisor.Linea = lineas[0];
             datosVisor.Supervisor = lineas[1];
             datosVisor.PedidoEnProduccion = lineas[2];
             datosVisor.PedidoAnterior = lineas[3];
-            datosVisor.PedidoSiguiente = lineas[4];
+            //datosVisor.PedidoSiguiente = lineas[4]; //reemplazado temporalmente por "Promedio"
             datosVisor.TotalUnidadesPedido = lineas[5];
 
             string pro = lineas[6];
@@ -185,6 +208,8 @@ namespace AplicacionParasita
             datosVisor.ParcialTest = lineas[5]; //por ahora es siempre igual al total del pedido ingresado
             datosVisor.ParcialEmbalado = lineas[5]; //por ahora es siempre igual al total del pedido ingresado
             datosVisor.EstadoPedido = lineas[14].ToUpper().TrimEnd();
+
+            datosVisor.Promedio = _promedio;
 
             return datosVisor;
         }

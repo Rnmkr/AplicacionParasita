@@ -42,7 +42,6 @@ namespace AplicacionParasita
                 string localdir = Directory.GetParent(Assembly.GetExecutingAssembly().Location).ToString();
                 _TEXTFILEPATH = Path.Combine(Directory.GetParent(localdir).ToString(), "HIDE", "FORMATO.TXT");
                 _RATEFILEPATH = Path.Combine(Directory.GetParent(localdir).ToString(), "HIDE", DateTime.Today.ToString("yyyy-MM-dd") + ".PRM");
-                MessageBox.Show(_RATEFILEPATH);
                 _EXEFILEPATH = Path.Combine(localdir, "Comunicador.exe");
                 _LOGFILEPATH = Path.Combine(localdir, "AplicacionParasita.apl");
 

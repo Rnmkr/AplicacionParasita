@@ -107,13 +107,29 @@ namespace AplicacionParasita
 
                 if (_counterRefrescoPromedio == 0)
                 {
-                    DateTime creation = File.GetCreationTime(_PROMEDIOTXT);
+                    DateTime creation = DateTime.Now;
+                    Nullable<float> linesNullable = 0;
+
+                    try
+                    {
+                        creation = File.GetCreationTime(_PROMEDIOTXT);
+                        linesNullable = File.ReadAllLines(_PROMEDIOTXT).Length;
+                    }
+                    catch (Exception e)
+                    {
+                        EscribirLog("RD: " + e.Message);
+                        labelIndicador.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal,
+                           new Action(() => { labelIndicador.Background = System.Windows.Media.Brushes.Red; }));
+                        labelIndicador.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal,
+                           new Action(() => { labelTexto.Content = "NO SE ENVIAN DATOS AL DISPLAY"; }));
+                    }
+
                     float elapsed = DateTime.Now.Subtract(creation).Minutes;
-                    Nullable<float> linesNullable = File.ReadAllLines(_PROMEDIOTXT).Length;
                     float lines = linesNullable.HasValue ? linesNullable.Value : 0;
                     float rate = (float)Math.Round((lines / elapsed), 2);
                     _promedio = rate.ToString();
                     _counterRefrescoPromedio = 3;
+
                 }
             }
             catch (Exception e)

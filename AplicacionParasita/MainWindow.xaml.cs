@@ -108,18 +108,15 @@ namespace AplicacionParasita
                 {
                     _PROMEDIOTXT = Path.Combine(Directory.GetParent(_LOCALDIR).ToString(), "HIDE", DateTime.Today.ToString("yyyy-MM-dd") + ".PRM");
 
-                    DateTime creation = File.GetCreationTime(_PROMEDIOTXT);
+                    DateTime creation = File.GetCreationTime(_PROMEDIOTXT); //sale a exception si es null
 
-                    float lines = File.ReadAllLines(_PROMEDIOTXT).Length;
+                    float lines = File.ReadAllLines(_PROMEDIOTXT).Length; //sale a exception si es null
 
                     float elapsed = DateTime.Now.Subtract(creation).Minutes;
 
-                    float rate = (float)Math.Round((lines / elapsed), 2);
+                    float rate = (float)Math.Round((lines / elapsed), 1);
 
-                    if (rate < 0)
-                    {
-                        rate = 0;
-                    }
+                    if (rate < 0) rate = 0;
 
                     _promedio = rate.ToString();
 

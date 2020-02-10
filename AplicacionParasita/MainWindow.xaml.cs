@@ -36,7 +36,6 @@ namespace AplicacionParasita
             try
             {
 
-
                 _timer = new Timer(1000) { AutoReset = true }; //espera 20 segundos (+10 de espera refrescando) para enviar datos a la pantalla.
                 _timer.Elapsed += (sender, eventArgs) => EnviarDatos();
                 _timer.Start();
@@ -62,18 +61,6 @@ namespace AplicacionParasita
         private void EnviarDatos()
         {
             counter--;
-            _counterPromedio--;
-
-            if (_counterPromedio == 0)
-            {
-                DateTime creation = File.GetCreationTime(_RATEFILEPATH);
-                float elapsed = DateTime.Now.Subtract(creation).Minutes;
-                Nullable<float> linesNullable = File.ReadAllLines(_RATEFILEPATH).Length;
-                float lines = linesNullable.HasValue ? linesNullable.Value : 0;
-                float rate = (float)Math.Round((lines / elapsed), 2);
-                _promedio = rate.ToString();
-                _counterPromedio = 3;
-            }
 
             if (counter == 0)
             {
@@ -106,6 +93,19 @@ namespace AplicacionParasita
         {
             try
             {
+                _counterPromedio--;
+
+                if (_counterPromedio == 0)
+                {
+                    DateTime creation = File.GetCreationTime(_RATEFILEPATH);
+                    float elapsed = DateTime.Now.Subtract(creation).Minutes;
+                    Nullable<float> linesNullable = File.ReadAllLines(_RATEFILEPATH).Length;
+                    float lines = linesNullable.HasValue ? linesNullable.Value : 0;
+                    float rate = (float)Math.Round((lines / elapsed), 2);
+                    _promedio = rate.ToString();
+                    _counterPromedio = 3;
+                }
+
                 Process process = new Process();
                 process.StartInfo.FileName = _EXEFILEPATH;
                 process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;

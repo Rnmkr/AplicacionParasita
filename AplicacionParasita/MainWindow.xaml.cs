@@ -106,6 +106,8 @@ namespace AplicacionParasita
 
                 if (_counterRefrescoPromedio == 0)
                 {
+                    _counterRefrescoPromedio = 3;
+
                     _PROMEDIOTXT = Path.Combine(Directory.GetParent(_LOCALDIR).ToString(), "HIDE", DateTime.Today.ToString("yyyy-MM-dd") + ".PRM");
 
                     DateTime creation = File.GetCreationTime(_PROMEDIOTXT); //sale a exception si es null
@@ -119,8 +121,6 @@ namespace AplicacionParasita
                     if (rate < 0) rate = 0;
 
                     _promedio = rate.ToString();
-
-                    _counterRefrescoPromedio = 3;
 
                 }
             }
